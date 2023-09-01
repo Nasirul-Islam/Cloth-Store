@@ -69,7 +69,6 @@
     ></script>
   </head>
   <body>
-    {% comment %} {{request.user.first_name}} {% endcomment %}
     <header class="section-header">
       <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
         <div class="container">
@@ -152,25 +151,23 @@
             <div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3">
               <div class="d-flex justify-content-end mb-3 mb-lg-0">
                 <div class="widget-header">
-                  {% comment %} {%if request.user.is_authenticated %} {%
-                  endcomment %} {% comment %}
-                  <small class="title text-muted"> Welcome username</small> {%
-                  endcomment %} {% comment %}
+                  {%if request.user.is_authenticated %}
+                  <small class="title text-muted">
+                    Welcome {{request.user.first_name}}</small
+                  >
                   <div>
-                    <a href="{% url 'profile' %}">Profile</a>
+                    <a href="{% url 'dashbord' %}">Profile</a>
                     <span class="dark-transp"> | </span>
-                    <a href="{% url 'logout' %}"> Logout </a>
+                    <a href="{% url 'signOut' %}"> Sign Out </a>
                   </div>
-                  {% endcomment %} {% comment %} {% else %} {% endcomment %}
+                  {% else %}
                   <small class="title text-muted">Welcome guest!</small>
                   <div>
-                    {% comment %} {% url 'login' %} {% endcomment %}
-                    <a href="">Sign in</a>
+                    <a href="{% url 'signin' %}">Sign In</a>
                     <span class="dark-transp"> | </span>
-                    {% comment %} {% url 'register' %} {% endcomment %}
-                    <a href=""> Register</a>
+                    <a href="{% url 'register' %}"> Register</a>
                   </div>
-                  {% comment %} {% endif %} {% endcomment %}
+                  {% endif %}
                 </div>
                 {% comment %} {% url 'cart' %} {% endcomment %}
                 <a href="" class="widget-header pl-3 ml-3">
