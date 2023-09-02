@@ -11,7 +11,7 @@ def home(request):
     else:
         items = ProductsModel.objects.all()
         
-    paginator = Paginator(items, 3) 
+    paginator = Paginator(items, 4) 
     page = request.GET.get('page') 
     items_on_page = paginator.get_page(page)
     context = {

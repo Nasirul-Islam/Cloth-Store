@@ -148,8 +148,11 @@
                   </div>
                   <!-- price-wrap.// -->
                 </div>
-                {% comment %} {% url 'add_cart' item.id %} {% endcomment %}
-                <a href="" class="btn btn-block btn-success">Added to cart </a>
+                <a
+                  href="{% url 'add_cart' item.id %}"
+                  class="btn btn-block btn-success"
+                  >Added to wishlist
+                </a>
               </figcaption>
             </figure>
           </div>
