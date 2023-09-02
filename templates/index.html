@@ -19,136 +19,62 @@
 <section class="section-name padding-y-sm">
   <div class="container">
     <header class="section-heading">
-      <a href="./store.html" class="btn btn-outline-primary float-right"
-        >See all</a
-      >
+      <div class="sorting-options float-right">
+        <a href="?sort=asc">Low to High</a> |
+        <a href="?sort=desc">High to Low</a>
+      </div>
       <h3 class="section-title">Popular products</h3>
     </header>
     <!-- sect-heading -->
 
     <div class="row">
+      {% for item in products %}
       <div class="col-md-3">
         <div class="card card-product-grid">
           <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/1.jpg" />
+            <img src="{{item.image.url}}" />
           </a>
           <figcaption class="info-wrap">
             <a href="./product-detail.html" class="title"
-              >Just another product name</a
+              >{{item.product_name}}</a
             >
-            <div class="price mt-1">$179.00</div>
+            <div class="price mt-1">${{item.price}}</div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
       </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/2.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Some item name here</a
-            >
-            <div class="price mt-1">$280.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/3.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Great product name here</a
-            >
-            <div class="price mt-1">$56.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/4.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Just another product name</a
-            >
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/5.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Just another product name</a
-            >
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/6.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Some item name here</a
-            >
-            <div class="price mt-1">$280.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/7.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Great product name here</a
-            >
-            <div class="price mt-1">$56.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
-      <div class="col-md-3">
-        <div class="card card-product-grid">
-          <a href="./product-detail.html" class="img-wrap">
-            <img src="images/items/9.jpg" />
-          </a>
-          <figcaption class="info-wrap">
-            <a href="./product-detail.html" class="title"
-              >Just another product name</a
-            >
-            <div class="price mt-1">$179.00</div>
-            <!-- price-wrap.// -->
-          </figcaption>
-        </div>
-      </div>
-      <!-- col.// -->
+      {% endfor %}
     </div>
     <!-- row.// -->
+    <nav class="mt-4" aria-label="Page navigation sample">
+      <ul class="pagination">
+        {% if products.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{products.previous_page_number}}"
+            >Previous</a
+          >
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link">Previous</a>
+        </li>
+        {% endif %} {% for i in products.paginator.page_range %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{i}}">{{i}}</a>
+        </li>
+        {% endfor %} {% if products.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{products.next_page_number}}"
+            >Next</a
+          >
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <a class="page-link">Next</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
   <!-- container // -->
 </section>

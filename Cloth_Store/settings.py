@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'store',
+    'category',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +120,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 # define static directory
 STATICFILES_DIRS = [
     BASE_DIR/'static',
