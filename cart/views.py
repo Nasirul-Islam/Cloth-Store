@@ -95,24 +95,3 @@ def remove_item(request, product_id):
     cart_item = CartItem.objects.get(cart=cart_id, product = product) 
     cart_item.delete()
     return redirect('cart')
-
-def checkout(request):
-    print(request.POST)
-    tax=0
-    total=0.0
-    totalPrice=0
-    if request.user.is_authenticated:
-        cart_items = CartItem.objects.filter(user=request.user)
-        for i in cart_items:
-            total += i.product.price * i.quantity
-    else:
-        session_id = get_create_session(request)
-        cart_id = Cart.objects.get(cart_id = session_id)
-        if cart_id:
-            cart_items = CartItem.objects.filter(cart=cart_id)
-            for i in cart_items:
-                total += i.product.price * i.quantity
-    tax = total*0.02
-    totalPrice = total+tax
-    context = {'cart_items': cart_items, 'total': total, 'tax': tax, 'totalPrice': totalPrice}
-    return render(request, 'place-order.html', context)

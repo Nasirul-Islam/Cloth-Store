@@ -1,7 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404 
 from .models import ProductsModel
 from category.models import ProductsCategory
 from django.core.paginator import Paginator
+from reviews.forms import ReviewForm
+from reviews.models import UserReviewsModel
+from django.db.models import Avg
 
 # Create your views here.
 def store(request, category_slug=None):
@@ -32,5 +35,20 @@ def store(request, category_slug=None):
 
 def product_detail(request, category_slug, product_slug):
     single_product = ProductsModel.objects.get(slug=product_slug, category__slug = category_slug)
-    return render(request, 'product-detail.html', {'product': single_product})
-
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user 
+            review.product = single_product
+            review.save()  
+    else:
+        form = ReviewForm()
+    # Average ratings 
+    reviews = UserReviewsModel.objects.filter(product = single_product).annotate(avg_rating=Avg('rating'))
+    context = {
+        'product': single_product,
+        'form': form,
+        'reviews': reviews,
+    }
+    return render(request, 'product-detail.html', context)
