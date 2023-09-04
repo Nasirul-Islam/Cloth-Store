@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from store.models import ProductsModel
 from django.core.paginator import Paginator
+from store.models import ProductsModel
+from .forms import SearchForm
+
 
 def home(request):    
     sort_order = request.GET.get('sort')
@@ -14,8 +17,21 @@ def home(request):
     paginator = Paginator(items, 4) 
     page = request.GET.get('page') 
     items_on_page = paginator.get_page(page)
+
+    if request.method == 'GET':
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            print(query)
+            results = ProductsModel.objects.filter(product_name__icontains=query)
+            print(results)
+            return render(request, 'index.html', {'products': results})
+    else:
+        form = SearchForm()
+        
     context = {
         'products': items_on_page,
         'sort_order': sort_order,
+        'form': form,
     }
     return render(request, 'index.html', context)
