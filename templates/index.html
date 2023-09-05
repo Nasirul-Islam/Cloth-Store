@@ -30,37 +30,42 @@
       <h3 class="section-title text-success">Popular products</h3>
     </header>
     <!-- sect-heading -->
-
+    {% if products %}
     <div class="row">
-      {% if products %} {% for item in products %}
+      {% for item in products %}
       <div class="col-md-3">
         <div class="card card-product-grid">
           <a
             href="{% url 'productDetail' item.category.slug item.slug %}"
-            class="img-wrap p-2"
+            class="img-wrap"
           >
             <img src="{{item.image.url}}" />
           </a>
           <figcaption class="info-wrap">
-            <h5>
+            <h6>
               <a
                 href="{% url 'productDetail' item.category.slug item.slug %}"
                 class="title"
                 >{{item.product_name}}
               </a>
-            </h5>
+            </h6>
             <div class="price mt-1 d-flex justify-content-between">
-              <p class="text-muted">{{item.rating}}3.4</p>
-              <p class="text-muted">${{item.price}}</p>
+              <p class="text-warning">{{item.rating}}3.4</p>
+              <p class="text-bold">${{item.price}}</p>
             </div>
             <!-- price-wrap.// -->
           </figcaption>
         </div>
       </div>
-      {% endfor %} {% else %}
-      <h3 class="section-title">Search Products does not match</h3>
-      {% endif %}
+      {% endfor %}
     </div>
+    {% else %}
+    <div>
+      <h5 class="text-center text-warning">
+        !!! Search Products does not found !!!
+      </h5>
+    </div>
+    {% endif %}
     <!-- row.// -->
     <nav class="mt-4" aria-label="Page navigation sample">
       <ul class="pagination d-flex justify-content-center">
@@ -94,5 +99,11 @@
   </div>
   <!-- container // -->
 </section>
-
+<!-- reviews here // -->
+<section class="section-name padding-y-sm my-4">
+  <div class="container">
+    <h3 class="text-center text-success my-3">User's Reviews</h3>
+    <p class="text-center text-warning">Reviews Under Construction...</p>
+  </div>
+</section>
 {% endblock %}
