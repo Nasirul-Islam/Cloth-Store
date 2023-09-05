@@ -3,7 +3,7 @@ from store.models import ProductsModel
 from django.core.paginator import Paginator
 from store.models import ProductsModel
 from .forms import SearchForm
-
+from reviews.models import UserReviewsModel
 
 def home(request):    
     sort_order = request.GET.get('sort')
@@ -28,7 +28,8 @@ def home(request):
             return render(request, 'index.html', {'products': results})
     else:
         form = SearchForm()
-        
+    # Average ratings 
+    # reviews = UserReviewsModel.objects.filter(product = single_product).annotate(avg_rating=Avg('rating'))
     context = {
         'products': items_on_page,
         'sort_order': sort_order,
